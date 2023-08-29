@@ -1,0 +1,11 @@
+common/config/local.py
+__pycache__
+.DS_Store
+.idea
+*.pyc
+*.pdf
+*.gv
+*.png
+*.db
+*.log
+venv
