@@ -28,7 +28,7 @@ class OutputBuilder:
         self.node = node
         # 获取节点的输出
 
-        keys = self.node.output.model_fields.keys()
+        keys = self.node.output().model_fields.keys()
         self.keys = set(keys)
         self.down_streams = dict()
 
@@ -52,10 +52,10 @@ class OutputBuilder:
         other_input_builder.on_attach(self)
 
     def build(self, dag: Dag):
+        get_logger().info(f"building {self.node.id}-{self.node.label} ...")
         for node_id, item in self.down_streams.items():
             node = item["node"]
             outputs = item["outputs"]
-            get_logger().info(f"building {node.id}-{node.label} ...")
 
             mapper = Mapper()
             for output in outputs.values():
@@ -78,7 +78,7 @@ class InputBuilder:
     def __init__(self, node: EndNode):
         self.node = node
         # 获取节点的输入
-        keys = self.node.input.model_fields.keys()
+        keys = self.node.input().model_fields.keys()
         self.keys = set(keys)
         self.up_streams_set = set()
 

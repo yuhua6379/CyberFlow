@@ -14,7 +14,7 @@ class Output(BaseModel):
     output: str
 
 
-class LLMSummarizer(ExecutableNode):
+class LLMContentCompressor(ExecutableNode):
 
     def input(self) -> BaseModel:
         return Input
@@ -24,8 +24,8 @@ class LLMSummarizer(ExecutableNode):
 
     def __init__(self, id_: int, label: str, llm: BaseLLM):
         super().__init__(id_, label)
-        self.prompt_template = "'{input}'\n"\
-                               "写一段上面这段话的摘要，且回复我这段摘要，且你只允许回复这段摘要。\n"\
+        self.prompt_template = "'{input}'\n" \
+                               "写一段上面这段话的摘要，且回复我这段摘要，且你只允许回复这段摘要。\n" \
                                "<>"
         self.llm = llm
 

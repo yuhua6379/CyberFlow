@@ -1,19 +1,15 @@
 import os
 
 import openai
-from pydantic import BaseModel
 
 from cases.genshin_impact_question.llm_reply import LLMReply
 from components.infobox import InfoBox
 from components.llm_build_kw import LLMBuildKW
 from components.llm_summarizer import LLMSummarizer
 from components.searcher import Searcher
-from dag.base.mapper import Mapper
 from dag.builder import DagBuilder
 from dag.dag import Dag, DagRun
-from dag_parser.draw_dag import DrawDag
 from dag_parser.iterator import DagIterator
-from dag_parser.node import Node
 from model.llm import ChatGPT
 
 openai.api_key = os.environ["openai_api_key"]
@@ -31,11 +27,7 @@ has_weapon = builder.allocate(LLMBuildKW,
 
 search_weapon = builder.allocate(Searcher, label="搜索武器")
 
-extract_weapon_info = builder.allocate(LLMSummarizer, label="提取信息",
-                                       llm=gpt,
-                                       prompt_template="'{input}'\n"
-                                                       "总结上面这段话，且回复我这段总结，且你只允许回复这段总结。\n"
-                                                       "<>")
+extract_weapon_info = builder.allocate(LLMSummarizer, llm=gpt, label="提取信息")
 
 has_character = builder.allocate(LLMBuildKW,
                                  llm=gpt,
@@ -46,13 +38,7 @@ has_character = builder.allocate(LLMBuildKW,
 
 search_character = builder.allocate(Searcher, label="搜索人物")
 
-extract_character_info = builder.allocate(LLMSummarizer,
-
-                                          llm=gpt,
-                                          label="提取信息",
-                                          prompt_template="'{input}'\n"
-                                                          "总结上面这段话，且回复我这段总结，且你只允许回复这段总结。\n"
-                                                          "<>")
+extract_character_info = builder.allocate(LLMSummarizer, llm=gpt, label="提取信息")
 
 if __name__ == '__main__':
     root.out.info.connect(has_weapon.input)

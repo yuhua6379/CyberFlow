@@ -14,10 +14,10 @@ class Output(BaseModel):
 
 class LLMBuildKW(ExecutableNode):
 
-    def _execute(self, input_: dict) -> dict:
-        prompt = self.prompt_template.format(**input_)
+    def _execute(self, input_: Input) -> dict:
+        prompt = self.prompt_template.format(**input_.model_dump())
         res = self.llm.chat(prompt)
-        return {"output": res}
+        return Output(output=res)
 
     def __init__(self, id_: int, label: str, prompt_template: str, llm: BaseLLM):
 
@@ -25,11 +25,9 @@ class LLMBuildKW(ExecutableNode):
         self.prompt_template = prompt_template
         self.llm = llm
 
-    @property
     def input(self) -> BaseModel:
         return Input
 
-    @property
     def output(self) -> BaseModel:
         return Output
 

@@ -20,7 +20,6 @@ prompt = """
 
 class LLMReply(EndNode):
 
-    @property
     def input(self) -> BaseModel:
         return Input
 

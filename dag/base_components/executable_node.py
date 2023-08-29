@@ -1,5 +1,7 @@
 from abc import abstractmethod
 
+from pydantic import BaseModel
+
 from common.log.logger import get_logger
 from dag.base.attach_to import AttachTo
 from dag.base_components.end_note import EndNode
@@ -27,7 +29,9 @@ class ExecutableNode(EndNode, AttachTo):
         get_logger().debug(f"Node:{self.id}-{self.label} receive: {in_data}")
 
         get_logger().info(f"Node:{self.id}-{self.label} executing...")
-        out_data = self._execute(in_data)
+        in_model = self.input().model_validate(in_data)
+        out_model = self._execute(in_model)
+        out_data = out_model.model_dump()
         get_logger().debug(f"Node:{self.id}-{self.label} return: {out_data}")
 
         self.spread_results(out_data)
@@ -35,7 +39,7 @@ class ExecutableNode(EndNode, AttachTo):
         self.is_finish = True
 
     @abstractmethod
-    def _execute(self, input_: dict) -> dict:
+    def _execute(self, input_: dict) -> BaseModel:
         raise NotImplementedError
 
     def finish(self) -> bool:

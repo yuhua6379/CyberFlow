@@ -10,7 +10,6 @@ class Output(BaseModel):
 
 class InfoBox(StartNode):
 
-    @property
     def output(self) -> BaseModel:
         return Output
 
