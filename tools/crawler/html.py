@@ -1,3 +1,4 @@
+
 from selenium import webdriver
 from tools.crawler.cx_extractor import CxExtractor
 from selenium.webdriver.chrome.options import Options
@@ -22,8 +23,3 @@ class HtmlCrawler:
         content = self.cx.filter_tags(self.browser.page_source)
         return self.cx.getText(content)
 
-
-if __name__ == '__main__':
-    crawler = HtmlCrawler()
-    crawler.get_page('https://zh.wikipedia.org/wiki/%E5%8C%97%E4%BA%AC%E5%B8%82')
-    print(crawler.get_content())
