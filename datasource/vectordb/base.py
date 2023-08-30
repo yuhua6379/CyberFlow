@@ -22,11 +22,11 @@ class VectorDbBase(ABC):
         self.conf = conf
 
     @abstractmethod
-    def batch_query(self, query_texts: List[str]) -> List[Tuple[str, List[Response]]]:
+    def batch_query(self, query_texts: List[str], n_results: int) -> List[Tuple[str, List[Response]]]:
         pass
 
-    def query(self, query_text) -> List[Response]:
-        return self.batch_query([query_text])[0][1]
+    def query(self, query_text, n_results: int) -> List[Response]:
+        return self.batch_query([query_text], n_results)[0][1]
 
     @abstractmethod
     def batch_save(self, doc_list: List[Document]):

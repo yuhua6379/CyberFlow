@@ -8,7 +8,8 @@ from components.llm_build_kw import LLMBuildKW
 from components.llm_summarizer import LLMSummarizer
 from components.searcher import Searcher
 from dag.builder import DagBuilder
-from dag.dag import Dag, DagRun
+from dag.dag import Dag
+from dag.dag_run import DagRun
 from dag_parser.iterator import DagIterator
 from model.llm import ChatGPT
 
@@ -56,9 +57,6 @@ if __name__ == '__main__':
     dag = builder.build()
     # DrawDag.draw_from_root(root.node)
 
-    dag_run = DagRun()
-
-    di = DagIterator(dag_run)
-    di.iter_downstream(root.node)
+    dag_run = DagRun(root.node)
 
     dag_run.run()

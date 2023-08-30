@@ -6,8 +6,8 @@ from cases.compress_content.simple_reply import SimpleReply
 from components.infobox import InfoBox
 from components.llm_content_compressor import LLMContentCompressor
 from dag.builder import DagBuilder
-from dag.dag import Dag, DagRun
-from dag_parser.iterator import DagIterator
+from dag.dag import Dag
+from dag.dag_run import DagRun
 from model.llm import ChatGPT
 
 openai.api_key = os.environ["openai_api_key"]
@@ -146,11 +146,7 @@ if __name__ == '__main__':
     compressor.out.output.connect(reply.input)
 
     dag = builder.build()
-    # DrawDag.draw_from_root(root.node)
 
-    dag_run = DagRun()
-
-    di = DagIterator(dag_run)
-    di.iter_downstream(root.node)
+    dag_run = DagRun(root.node)
 
     dag_run.run()
