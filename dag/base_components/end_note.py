@@ -1,5 +1,6 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
+from common.log.logger import get_logger
 from dag.base.attach_from import AttachFrom
 from dag.base.base_node import BaseNode
 from dag.base_components.executable import Executable
@@ -7,6 +8,10 @@ from dag.base_components.pipeline import PipeLine
 
 
 class EndNode(BaseNode, Executable, AttachFrom, ABC):
+    def __init__(self, id_: int, label: str):
+        super().__init__(id_, label)
+        self.is_finish = False
+
     def attach_from(self, from_: PipeLine):
         self.in_edges.append(from_)
 
@@ -19,7 +24,26 @@ class EndNode(BaseNode, Executable, AttachFrom, ABC):
             return None
 
     def finish(self):
-        return True
+        return self.is_finish
+
+    @abstractmethod
+    def _execute(self, input_: dict):
+        raise NotImplementedError
+
+    def execute(self):
+        """
+        执行这个节点，并且把结果散播到下游去
+        :return:
+        """
+
+        in_data = self.collect_results()
+
+        get_logger().debug(f"Node:{self.id}-{self.label} receive: {in_data}")
+
+        get_logger().info(f"Node:{self.id}-{self.label} executing...")
+        in_model = self.input().parse_obj(in_data)
+        self._execute(in_model)
+        self.is_finish = True
 
     def collect_results(self):
         """

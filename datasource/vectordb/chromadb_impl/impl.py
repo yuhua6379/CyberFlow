@@ -40,8 +40,8 @@ class ChromaDB(VectorDbBase):
         return super().save(doc)
 
     @synchronized
-    def query(self, query_text, n_results: int) -> List[Response]:
-        return super().query(query_text)
+    def query(self, query_text, n_results: int = 10) -> List[Response]:
+        return super().query(query_text, n_results=n_results)
 
     @synchronized
     def get(self, id_: str):
@@ -78,8 +78,8 @@ class ChromaDB(VectorDbBase):
         )
 
     @synchronized
-    def batch_query(self, query_texts: List[str], n_results: int) -> List[Tuple[str, List[Response]]]:
-        ret = self.collection.query(query_texts=query_texts)
+    def batch_query(self, query_texts: List[str], n_results: int = 10) -> List[Tuple[str, List[Response]]]:
+        ret = self.collection.query(query_texts=query_texts, n_results=n_results)
         response_list = []
         for i in range(len(ret["ids"])):
             single_response = []

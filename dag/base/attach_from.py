@@ -11,5 +11,5 @@ class AttachFrom:
         raise NotImplementedError
 
     @abstractmethod
-    def input(self) -> BaseModel:
+    def input(self) :
         raise NotImplementedError

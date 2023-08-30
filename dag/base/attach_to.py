@@ -11,5 +11,5 @@ class AttachTo:
         raise NotImplementedError
 
     @abstractmethod
-    def output(self) -> BaseModel:
+    def output(self) :
         raise NotImplementedError

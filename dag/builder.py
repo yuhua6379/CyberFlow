@@ -26,7 +26,7 @@ class OutputBuilder:
         self.node = node
         # 获取节点的输出
 
-        keys = self.node.output().model_fields.keys()
+        keys = self.node.output().schema()["properties"].keys()
         self.keys = set(keys)
         self.down_streams = dict()
 
@@ -76,7 +76,7 @@ class InputBuilder:
     def __init__(self, node: EndNode):
         self.node = node
         # 获取节点的输入
-        keys = self.node.input().model_fields.keys()
+        keys = self.node.input().schema()["properties"].keys()
         self.keys = set(keys)
         self.up_streams_set = set()
 
@@ -121,6 +121,11 @@ class DagBuilder:
     def allocate(self, type_: Type, *args, **kwargs):
         connector = NodeConnector(self.dag.allocate(type_, *args, **kwargs))
         self.node_connectors.append(connector)
+        return connector
+
+    def allocate_root(self, type_: Type, *args, **kwargs):
+        connector = self.allocate(type_, *args, **kwargs)
+        self.dag.root = connector.node
         return connector
 
     def build(self) -> Dag:

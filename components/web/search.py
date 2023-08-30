@@ -11,12 +11,15 @@ class Result(BaseModel):
     result: str
 
 
-class Searcher(ExecutableNode):
+class Search(ExecutableNode):
+    """
+    调用搜索引擎，搜索数据
+    """
 
-    def input(self) -> BaseModel:
+    def input(self):
         return Query
 
-    def output(self) -> BaseModel:
+    def output(self):
         return Result
 
     def _execute(self, input_: Query) -> dict:

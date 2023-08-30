@@ -12,12 +12,12 @@ class Output(BaseModel):
     output: str
 
 
-class LLMSummarizer(ExecutableNode):
+class LLMSummary(ExecutableNode):
 
-    def input(self) -> BaseModel:
+    def input(self) :
         return Input
 
-    def output(self) -> BaseModel:
+    def output(self) :
         return Output
 
     def __init__(self, id_: int, label: str, llm: BaseLLM,
@@ -28,4 +28,4 @@ class LLMSummarizer(ExecutableNode):
         self.llm = llm
 
     def _execute(self, input_: Input) -> dict:
-        return Output(output=self.llm.chat(self.prompt_template.format(**input_.model_dump())))
+        return Output(output=self.llm.chat(self.prompt_template.format(**input_.dict())))

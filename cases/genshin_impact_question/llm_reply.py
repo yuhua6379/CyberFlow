@@ -7,7 +7,6 @@ from model.llm import BaseLLM
 class Input(BaseModel):
     weapon_info: str
     character_info: str
-    user_demand: str
 
 
 prompt = """
@@ -21,15 +20,17 @@ prompt = """
 
 class LLMReply(EndNode):
 
-    def input(self) -> BaseModel:
+    def _execute(self, input_: Input):
+
+        kw = input_.dict()
+        kw["user_demand"] = self.get_context().get_user_input()
+        print(self.llm.chat(prompt.format(**kw)))
+
+    def input(self):
         return Input
 
     def finish(self):
         return True
-
-    def execute(self):
-        input_ = Input.model_validate(self.collect_results())
-        print(self.llm.chat(prompt.format(**input_.model_dump())))
 
     def __init__(self, id_: int, label: str, llm: BaseLLM):
         super().__init__(id_, label)

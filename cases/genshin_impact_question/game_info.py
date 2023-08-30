@@ -1,4 +1,4 @@
-characters = """
+character = """
 琳妮特
 旅行者/水
 林尼

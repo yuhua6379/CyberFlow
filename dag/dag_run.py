@@ -19,10 +19,10 @@ class DagRun(ExecutorSequenceParser):
         super().add_vertex_from_node(node)
         self.node_dict[node.id] = node
 
-    def run(self):
+    def run(self, context):
         get_logger().info(f"start to [[RUN]]...")
         for _, node_id_set in enumerate(self.parse()):
             for node_id in node_id_set:
                 node = self.node_dict[node_id]
-
+                node.register_context(context)
                 node.execute()

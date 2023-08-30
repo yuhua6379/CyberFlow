@@ -9,6 +9,7 @@ from dag.base_components.pipeline import PipeLine
 class Dag:
 
     def __init__(self):
+        self.root = None
         self.id_ = -1
 
     def connect(self, from_: AttachTo, to_: AttachFrom, mapper: Mapper, label: str = ""):
@@ -24,4 +25,3 @@ class Dag:
     def new_id(self):
         self.id_ += 1
         return self.id_
-

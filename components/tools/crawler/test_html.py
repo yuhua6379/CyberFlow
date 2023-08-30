@@ -1,4 +1,4 @@
-from tools.crawler.html import HtmlCrawler
+from components.tools.crawler.html import HtmlCrawler
 
 
 def test_HtmlCrawler():
