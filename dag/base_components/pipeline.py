@@ -24,5 +24,5 @@ class PipeLine(BaseEdge):
             temp = output_data[k1]
             del output_data[k1]
             output_data[k2] = temp
-            
+
         return output_data

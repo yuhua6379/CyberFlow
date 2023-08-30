@@ -8,8 +8,9 @@ from common.log.config_log import create_file_logger, initialize
 _global_thread_dict = dict()
 _global_logger_names = set()
 
-
 initialize()
+
+
 def get_logger():
     global _global_thread_dict
     thread_id = threading.current_thread().ident

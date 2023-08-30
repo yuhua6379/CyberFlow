@@ -3,12 +3,8 @@ from typing import Type
 from common.log.logger import get_logger
 from dag.base.attach_from import AttachFrom
 from dag.base.attach_to import AttachTo
-from dag.base.base_edge import BaseEdge
 from dag.base.base_node import BaseNode
 from dag.base.mapper import Mapper
-from dag.base_components.end_note import EndNode
-from dag.base_components.executable import Executable
-from dag.base_components.executable_node import ExecutableNode
 from dag.base_components.pipeline import PipeLine
 from dag_parser.exe_seq_parser import ExecutorSequenceParser
 
@@ -56,4 +52,3 @@ class DagRun(ExecutorSequenceParser):
                 #     print(f"running: {node_id}: {node.label}")
 
                 node.execute()
-

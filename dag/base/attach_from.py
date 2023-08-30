@@ -1,6 +1,7 @@
 from abc import abstractmethod
 
 from pydantic import BaseModel
+
 from dag_parser.node import Node
 
 

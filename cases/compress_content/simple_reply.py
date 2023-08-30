@@ -5,21 +5,10 @@ from model.llm import BaseLLM
 
 
 class Input(BaseModel):
-    weapon_info: str
-    character_info: str
-    user_demand: str
+    input: str
 
 
-prompt = """
-{weapon_info}
-{character_info}
-以上是一些知识
-请组织语言回答以下问题
-{user_demand}
-"""
-
-
-class LLMReply(EndNode):
+class SimpleReply(EndNode):
 
     def input(self) -> BaseModel:
         return Input
@@ -29,7 +18,7 @@ class LLMReply(EndNode):
 
     def execute(self):
         input_ = Input.model_validate(self.collect_results())
-        print(self.llm.chat(prompt.format(**input_.model_dump())))
+        print(input_.input)
 
     def __init__(self, id_: int, label: str, llm: BaseLLM):
         super().__init__(id_, label)

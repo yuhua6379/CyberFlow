@@ -20,7 +20,6 @@ class LLMBuildKW(ExecutableNode):
         return Output(output=res)
 
     def __init__(self, id_: int, label: str, prompt_template: str, llm: BaseLLM):
-
         super().__init__(id_, label)
         self.prompt_template = prompt_template
         self.llm = llm
@@ -30,4 +29,3 @@ class LLMBuildKW(ExecutableNode):
 
     def output(self) -> BaseModel:
         return Output
-

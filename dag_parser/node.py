@@ -1,7 +1,5 @@
 from abc import abstractmethod
 
-from pydantic import BaseModel
-
 
 class Node:
     def __init__(self, id_: int, label: str):

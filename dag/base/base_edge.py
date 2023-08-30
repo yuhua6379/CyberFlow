@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from dag_parser.edge import Edge
 from dag_parser.node import Node
 

@@ -1,6 +1,3 @@
-from abc import abstractmethod
-
-from dag.base_components.pipeline import PipeLine
 from dag_parser.node import Node
 
 

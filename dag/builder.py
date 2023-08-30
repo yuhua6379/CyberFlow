@@ -1,11 +1,9 @@
 from typing import Union, Type
 
 from common.log.logger import get_logger
-from dag.base.attach_from import AttachFrom
 from dag.base.attach_to import AttachTo
 from dag.base.mapper import Mapper
 from dag.base_components.end_note import EndNode
-from dag.base_components.executable_node import ExecutableNode
 from dag.base_components.start_node import StartNode
 from dag.dag import Dag
 
