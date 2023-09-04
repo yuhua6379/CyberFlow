@@ -1,12 +1,9 @@
 common/config/local.py
+venv
 __pycache__
 .DS_Store
 .idea
 *.pyc
-*.pdf
-*.gv
-*.png
 *.db
 *.log
 *.pytest_cache
-venv

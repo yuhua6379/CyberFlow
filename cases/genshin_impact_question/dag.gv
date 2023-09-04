@@ -1,0 +1,18 @@
+digraph {
+	0 [label="0-用户输入" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	0 -> 2 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	2 [label="2-是否包含武器" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	2 -> 3 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	3 [label="3-爬取武器并摘要" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	3 -> 4 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	4 [label="4-提取信息" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	4 -> 1 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	1 [label="1-回复用户" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	0 -> 5 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	5 [label="5-是否包含角色" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	5 -> 6 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	6 [label="6-爬取角色并摘要" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	6 -> 7 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+	7 [label="7-提取信息" color=blue fontname=Fangsong fontsize=8.0 labelfontsize=8.0 shape=oval]
+	7 -> 1 [arrowsize=0.5 color=gray fontcolor=black fontname=Fangsong fontsize=8.0 labelfontcolor=gray labelfontsize=8.0 xlabel=""]
+}
