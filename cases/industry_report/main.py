@@ -21,11 +21,10 @@ from model.llm import ChatGPT
 
 openai.api_key = os.environ["openai_api_key"]
 gpt = ChatGPT()
-gpt4 = ChatGPT(model="gpt-4")
 builder = DagBuilder(Dag())
 
 root = builder.allocate_root(InfoBox, label="用户输入")
-reply = builder.allocate(LLMReply, label="回复用户", llm=gpt4)
+reply = builder.allocate(LLMReply, label="回复用户", llm=gpt)
 has_weapon = builder.allocate(LLMBuildKW,
                               label="是否包含武器",
                               content_desc="这个是和游戏有关的一段话",
@@ -42,30 +41,30 @@ has_character = builder.allocate(LLMBuildKW,
 
 crawler_character = builder.allocate(GenshinPageCrawler, label="爬取角色并摘要", llm=gpt, max_tokens=2000)
 
-extract_character_info = builder.allocate(LLMSummary, llm=gpt4, label="提取信息")
+extract_character_info = builder.allocate(LLMSummary, llm=gpt, label="提取信息")
 
 if __name__ == '__main__':
-    root.OUT.info.connect(has_weapon.IN.input)
-    has_weapon.OUT.output.connect(crawler_weapon.IN.query)
-    crawler_weapon.OUT.result.connect(extract_weapon_info.IN.input)
-    extract_weapon_info.OUT.output.connect(reply.IN.weapon_info)
+    root.out.info.connect(has_weapon.input)
+    has_weapon.out.output.connect(crawler_weapon.query)
+    crawler_weapon.out.result.connect(extract_weapon_info.input)
+    extract_weapon_info.out.output.connect(reply.weapon_info)
 
-    root.OUT.info.connect(has_character.IN.input)
-    has_character.OUT.output.connect(crawler_character.IN.query)
-    crawler_character.OUT.result.connect(extract_character_info.IN.input)
-    extract_character_info.OUT.output.connect(reply.IN.character_info)
+    root.out.info.connect(has_character.input)
+    has_character.out.output.connect(crawler_character.query)
+    crawler_character.out.result.connect(extract_character_info.input)
+    extract_character_info.out.output.connect(reply.character_info)
 
     dag = builder.build()
 
     DrawDag.draw_from_root(dag.root)
-
-    dag_run = DagRun(root.node)
-
-    user_input = "我想知道艾尔海森能不能用裁叶萃光"
-
-    db = vector_db_factory.get_vector_db("genshin_knowledge")
-    context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
-    context.set("角色", character)
-    context.set("武器", weapon)
-    context.set("装备", artifact)
-    dag_run.run(context)
+    #
+    #
+    # dag_run = DagRun(root.node)
+    #
+    # user_input = "我想知道夜兰能不能拿裁叶萃光"
+    # db = vector_db_factory.get_vector_db("genshin_knowledge")
+    # context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
+    # context.set("角色", character)
+    # context.set("武器", weapon)
+    # context.set("装备", artifact)
+    # dag_run.run(context)

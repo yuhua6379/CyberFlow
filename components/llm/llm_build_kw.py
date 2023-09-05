@@ -9,7 +9,6 @@ from model.llm import BaseLLM
 class Input(BaseModel):
     input: str
 
-
 class Output(BaseModel):
     output: str
 
