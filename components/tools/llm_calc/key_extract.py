@@ -6,12 +6,24 @@ from model.llm import BaseLLM
 
 
 class KeyExtractCalc(BaseCalc):
-    def __init__(self, llm: BaseLLM, max_tokens: int, prompt_template: str):
+    def __init__(self, llm: BaseLLM, max_tokens: int, prompt_template: str, result_max_tokens: int = None,
+                 max_extract_round: int = 1):
         super().__init__(llm, max_tokens)
         self.max_tokens = max_tokens
         self.prompt_template = prompt_template
+        self.result_max_tokens = result_max_tokens
+        self.max_extract_round = max_extract_round - 1
 
     def extract(self, content: str):
+        result = self._extract(content)
+        for i in range(self.max_extract_round):
+            if self.result_max_tokens is None:
+                return result
+            if self.evaluate_tokens(result) > self.result_max_tokens:
+                result = self._extract(result)
+        return result
+
+    def _extract(self, content: str):
 
         content = re.split("[\n.。]", content)
         results = []
@@ -23,7 +35,7 @@ class KeyExtractCalc(BaseCalc):
             if tokens <= self.max_tokens * 0.5:
                 continue
 
-            if self.max_tokens * 0.7 <= tokens:
+            if tokens >= self.max_tokens * 0.7:
                 # 最后一段内容超标了，舍弃
                 temp.pop(-1)
                 temp_content = "\n".join(temp)
@@ -32,6 +44,13 @@ class KeyExtractCalc(BaseCalc):
             get_logger().debug(f"temp block result: {res}")
             temp = []
             results.append(res)
+
+            str_result = "\n".join(results)
+            result_tokens = self.evaluate_tokens(str_result)
+            if self.max_extract_round == 0 and result_tokens > self.result_max_tokens:
+                results.pop(-1)
+                get_logger().info(f"strip for exceeding result_max_tokens tokens: {result_tokens}")
+                return "\n".join(results)
 
         if len(temp) > 0:
             res = self.predict(self.prompt_template.format(input="\n".join(temp)))

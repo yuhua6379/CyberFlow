@@ -97,20 +97,15 @@ class InputBuilder:
 class NodeConnector:
     def __init__(self, node: Union[StartNode, EndNode]):
         self.node = node
-        self.out = self.in_ = None
+        self.OUT = self.IN = None
         if isinstance(node, StartNode) is True or isinstance(node, AttachTo):
-            self.out = OutputBuilder(self.node)
+            self.OUT = OutputBuilder(self.node)
         if isinstance(node, EndNode) is True:
-            self.in_ = InputBuilder(self.node)
-
-    def __getattr__(self, item):
-        if self.in_ is None:
-            raise RuntimeError(f"no attr {item}")
-        return self.in_.__getattr__(item)
+            self.IN = InputBuilder(self.node)
 
     def build(self, dag: Dag):
-        if self.out is not None:
-            self.out.build(dag)
+        if self.OUT is not None:
+            self.OUT.build(dag)
 
 
 class DagBuilder:

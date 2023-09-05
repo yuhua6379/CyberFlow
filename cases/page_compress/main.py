@@ -42,14 +42,14 @@ reply = builder.allocate(SimpleReply, label="打印")
 
 
 if __name__ == '__main__':
-    root.out.weapon.connect(extract_weapon.input)
-    extract_weapon.out.output.connect(reply.weapon)
+    root.OUT.weapon.connect(extract_weapon.IN.input)
+    extract_weapon.OUT.output.connect(reply.IN.weapon)
 
-    root.out.artifact.connect(extract_artifact.input)
-    extract_artifact.out.output.connect(reply.artifact)
+    root.OUT.artifact.connect(extract_artifact.IN.input)
+    extract_artifact.OUT.output.connect(reply.IN.artifact)
 
-    root.out.character.connect(extract_character.input)
-    extract_character.out.output.connect(reply.character)
+    root.OUT.character.connect(extract_character.IN.input)
+    extract_character.OUT.output.connect(reply.IN.character)
 
     dag = builder.build()
     db = vector_db_factory.get_vector_db("genshin_knowledge")

@@ -31,14 +31,14 @@ class GenshinPageCrawler(BaseLLMNode):
         content = crawler.get_content()
 
         prompt_template = (
-            f"这是关于{input_.query}的描述，从以下内容提取出关于{input_.query}是什么的内容，如果没有相关内容，回复'无':\n"
+            f"这是关于{input_.query}的描述,从以下内容提取出关于{input_.query}是什么的内容，如果没有相关内容，回复'无':\n"
             "'{input}'\n"
             "<>")
 
-        self.calc = KeyExtractCalc(self.llm, self.max_tokens, prompt_template)
+        self.calc = KeyExtractCalc(self.llm, self.max_tokens, prompt_template, result_max_tokens=self.max_tokens)
         content = self.calc.extract(content)
 
-        prompt = "回答以{q}为目的，精简以下面的段落并提取关键信息:\n'{c}'".format(q=self.get_context().get_user_input(),
-                                                              c=content)
-        content = self.calc.predict(prompt)
+        prompt = "以回答问题'{q}'为目的,精简以下面的段落并提取关键信息:\n'{c}'".format(
+            q=self.get_context().get_user_input(),
+            c=content)
         return Content(result=content)
