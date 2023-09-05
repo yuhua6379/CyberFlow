@@ -12,7 +12,7 @@
 ### 问题解决的步骤
 - 要解决的问题：原神的装备搭配相关问题
 - 问题的形式：用户提问，机器回答
-- 解答流程示意 ![workflow 流程](./cases/genshin_impact_question/dag.gv.png)
+- 解答流程示意 ![workflow 流程](./images/dag.gv.png)
 - 整个流程用到的步骤和工具包括：
   - 问题的理解
     - 问题的分类

@@ -2,6 +2,9 @@ common/config/local.py
 venv
 __pycache__
 .DS_Store
+*.gv
+*.pdf
+*.png
 .idea
 *.pyc
 *.db

@@ -59,13 +59,13 @@ if __name__ == '__main__':
 
     DrawDag.draw_from_root(dag.root)
 
-    dag_run = DagRun(root.node)
-
-    user_input = "我想知道艾尔海森能不能用裁叶萃光"
-
-    db = vector_db_factory.get_vector_db("genshin_knowledge")
-    context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
-    context.set("角色", character)
-    context.set("武器", weapon)
-    context.set("装备", artifact)
-    dag_run.run(context)
+    # dag_run = DagRun(root.node)
+    #
+    # user_input = "我想知道艾尔海森能不能用裁叶萃光"
+    #
+    # db = vector_db_factory.get_vector_db("genshin_knowledge")
+    # context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
+    # context.set("角色", character)
+    # context.set("武器", weapon)
+    # context.set("装备", artifact)
+    # dag_run.run(context)
