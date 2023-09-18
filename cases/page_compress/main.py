@@ -11,7 +11,7 @@ from context.knowledge_base import KnowledgeBase, VectorDBKnowledgeBase
 
 from dag.builder import DagBuilder
 from dag.dag import Dag
-from dag.dag_run import DagRun
+from dag.dag_run import SequenceDagRun
 
 from dag_parser.draw_dag import DrawDag
 from datasource.config import VECTOR_DB_CONF, vector_db_factory
@@ -20,7 +20,7 @@ from raw import *
 
 openai.api_key = os.environ["openai_api_key"]
 gpt = ChatGPT()
-builder = DagBuilder(Dag())
+builder = DagBuilder(Dag("页面压缩"))
 
 root = builder.allocate_root(InputBox,
                              label="用户输入")

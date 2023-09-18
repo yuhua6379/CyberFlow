@@ -1,6 +1,6 @@
 import re
 
-from common.base_thread import get_logger
+from common.log.logger import get_logger
 from components.tools.llm_calc.base import BaseCalc
 from model.llm import BaseLLM
 

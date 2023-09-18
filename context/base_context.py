@@ -4,7 +4,7 @@ from context.knowledge_base import KnowledgeBase
 
 
 class BaseContext:
-    def __init__(self, user_input: Any, knowledge: KnowledgeBase):
+    def __init__(self, user_input: Any, knowledge: KnowledgeBase = None):
         self.user_input = user_input
         self.knowledge = knowledge
         self.extend = {}

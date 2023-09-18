@@ -85,7 +85,8 @@ def create_file_logger(name: str):
 
 def initialize():
     console_log = os.environ.get("console_log", "ON").upper()
-    dict_conf = get_log_dict_config(os.environ.get("log_level", "INFO").upper())
+    log_level = os.environ.get("log_level", "INFO").upper()
+    dict_conf = get_log_dict_config(log_level)
     os.makedirs(config.log_path, exist_ok=True)
     if console_log == "ON":
         dict_conf['loggers']["root"]['handlers'] = ['console']

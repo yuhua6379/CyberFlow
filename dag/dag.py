@@ -8,9 +8,11 @@ from dag.base_components.pipeline import PipeLine
 
 class Dag:
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.root = None
         self.id_ = -1
+        self.node_dict = {}
 
     def connect(self, from_: AttachTo, to_: AttachFrom, mapper: Mapper, label: str = ""):
         new_edge_id = self.new_id()
@@ -19,8 +21,11 @@ class Dag:
         to_.attach_from(pipeline)
 
     def allocate(self, type_: Type, *args, **kwargs):
-        kwargs['id_'] = self.new_id()
-        return type_(*args, **kwargs)
+        node_id = self.new_id()
+        kwargs['id_'] = node_id
+        node = type_(*args, **kwargs)
+        self.node_dict[node_id] = node
+        return node
 
     def new_id(self):
         self.id_ += 1

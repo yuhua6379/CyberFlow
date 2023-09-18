@@ -14,7 +14,7 @@ from context.base_context import BaseContext
 from context.knowledge_base import VectorDBKnowledgeBase
 from dag.builder import DagBuilder
 from dag.dag import Dag
-from dag.dag_run import DagRun
+from dag.dag_run import SequenceDagRun
 from dag_parser.draw_dag import DrawDag
 from datasource.config import vector_db_factory
 from model.llm import ChatGPT

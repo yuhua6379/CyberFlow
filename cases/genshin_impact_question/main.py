@@ -14,7 +14,7 @@ from context.base_context import BaseContext
 from context.knowledge_base import VectorDBKnowledgeBase
 from dag.builder import DagBuilder
 from dag.dag import Dag
-from dag.dag_run import DagRun
+from dag.dag_run import SequenceDagRun, ParallelDagRun
 from dag_parser.draw_dag import DrawDag
 from datasource.config import vector_db_factory
 from model.llm import ChatGPT
@@ -22,7 +22,7 @@ from model.llm import ChatGPT
 openai.api_key = os.environ["openai_api_key"]
 gpt = ChatGPT()
 gpt4 = ChatGPT(model="gpt-4")
-builder = DagBuilder(Dag())
+builder = DagBuilder(Dag("原神问题"))
 
 root = builder.allocate_root(InfoBox, label="用户输入")
 reply = builder.allocate(LLMReply, label="回复用户", llm=gpt4)
@@ -57,15 +57,15 @@ if __name__ == '__main__':
 
     dag = builder.build()
 
-    DrawDag.draw_from_root(dag.root)
+    # DrawDag.draw_from_root(dag)
 
-    # dag_run = DagRun(root.node)
-    #
-    # user_input = "我想知道艾尔海森能不能用裁叶萃光"
-    #
-    # db = vector_db_factory.get_vector_db("genshin_knowledge")
-    # context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
-    # context.set("角色", character)
-    # context.set("武器", weapon)
-    # context.set("装备", artifact)
-    # dag_run.run(context)
+    dag_run = ParallelDagRun(dag)
+
+    user_input = "我想知道艾尔海森能不能用裁叶萃光"
+
+    db = vector_db_factory.get_vector_db("genshin_knowledge")
+    context = BaseContext(user_input=user_input, knowledge=VectorDBKnowledgeBase(db=db))
+    context.set("角色", character)
+    context.set("武器", weapon)
+    context.set("装备", artifact)
+    dag_run.run(context)

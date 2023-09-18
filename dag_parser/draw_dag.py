@@ -2,6 +2,7 @@ import logging
 
 from graphviz import Digraph, Source
 
+from dag.dag import Dag
 from dag_parser.edge import Edge
 from dag_parser.iterator import DagIterator
 from dag_parser.node import Node
@@ -41,8 +42,8 @@ class DrawDag(DagTraveler):
             s.view()  # 显示
 
     @classmethod
-    def draw_from_root(cls, node: Node):
+    def draw_from_root(cls, dag: Dag, f_name="./dag.gv"):
         draw = cls()
         di = DagIterator(draw)
-        di.iter_downstream(node)
-        draw.to_pic("./dag.gv", True)
+        di.iter_downstream(dag.root)
+        draw.to_pic(f_name, True)

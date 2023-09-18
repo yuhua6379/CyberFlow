@@ -29,8 +29,6 @@ class LLMReply(EndNode):
     def input(self):
         return Input
 
-    def finish(self):
-        return True
 
     def __init__(self, id_: int, label: str, llm: BaseLLM):
         super().__init__(id_, label)

@@ -42,6 +42,12 @@ class BaseThread(Callable):
     def start(self):
         self.th.start()
 
+    def is_alive(self):
+        return self.th.is_alive()
+
+    def join(self):
+        return self.th.join()
+
     @property
     def log(self):
         return get_logger()
@@ -54,4 +60,8 @@ class BaseThread(Callable):
         thread_id = threading.current_thread().ident
         _global_thread_dict[thread_id] = (create_file_logger(self.logger_name), self.th)
 
-        self.run()
+        try:
+            return self.run()
+        except:
+            import traceback
+            self.log(traceback.format_exc())

@@ -17,6 +17,10 @@ class PipeLine(BaseEdge):
     def get(self):
         # 按要求改名
         output_data = dict()
+        if self.data is None:
+            # 上游出异常了，所以抛弃这个输入，但返回空值，如果是optional选项则下游不受影响
+            return output_data
+
         for k, v in self.data.items():
             output_data[k] = v
 

@@ -24,5 +24,3 @@ class InfoBox(StartNode):
     def output(self):
         return Output
 
-    def finish(self):
-        return True
